@@ -1,0 +1,55 @@
+{% extends "mysite/base.html" %}
+{% load staticfiles %}
+{% block head %}
+  <script src="{% static 'blog/js/blog_edit.js' %}"></script>
+{% endblock %}
+{% block content %}
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="blog_title">Title:</label>
+    <input id="blog_title" name="title" type="text" class="form-control" placeholder="title" aria-describedby="basic-addon1" value="{{blog.title}}">
+  </div>
+  <div class="form-group">
+    <label for="blog_date">Date:</label>
+    <input type="date" id="blog_date"  value='{{ blog.date|date:"c" }}'></input>
+    <label for="blog_public">Public:</label>
+    <input id="blog_public" type="checkbox" {% if blog.view_level == 1000 %}checked{% endif %}></input>
+  </div>
+  <div class="form-group">
+    <label for="title" >Tags:</label>
+    <button type="button" onclick="loadTag()" >
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </button>
+    <button id="tagDialogTrigger" type="button" data-toggle="modal" class="hidden btn btn-link" data-target="#tagDialog">
+    </button>
+    <div id="selectedTag">
+      {% for tag in blog.tags.all %}
+        <input type="button" class="tag btn btn-default" onclick="deleteThis(this)" value="{{tag.value}}"/>
+      {% endfor %}
+    </div>
+    <div class="form-group">
+      <label for="blog_content">Content:</label>
+      <textarea id="blog_content" name="content" class="form-control" rows="15" >{{blog.content}}</textarea>
+    </div>
+    <button onclick="submit()" class="btn btn-default">Submit</button>
+    <div class="modal fade" id="tagDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button id="tagDialogClose" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" >Tags:</h4>
+          </div>
+          <div class="modal-body">
+            <div class="input-group">
+              <input id="newTagInput" type="text" class="form-control" placeholder="New Tag" aria-describedby="basic-addon2">
+              <span class="input-group-addon" > <button type="button" onclick="addTag($('#newTagInput').val())"  class="glyphicon glyphicon-ok" ></span>
+            </div>
+            <ul id="tagList" class="list-group">
+              <li class="list-group-item">Cras justo odio</li>
+            </ul>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  {% endblock %}

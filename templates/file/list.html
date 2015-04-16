@@ -1,0 +1,23 @@
+{% extends "mysite/base.html" %}
+{% block content %}
+  <article>
+    <section class="title">
+      <h2>File List</h2>
+    </section>
+    
+    <section class="post">
+      <ul class="listing">
+        {% for file in files %}
+          {% ifchanged file.submit_date.year %}
+            <li class="listing-seperator">{{file.submit_date.year}}</li>
+          {% endifchanged %}
+          <li class="listing-item">
+            <time datetime='{{ file.submit_date|date:"Y-m-d D H:i:s" }}'>{{ file.submit_date|date:"Y-m-d D H:i:s" }}</time>
+            <a href="/{{file_dir}}{{file.path}}" title="{{file.title}}">{{file.title}}</a>
+          </li>
+        {% endfor %}
+        
+      </ul>
+    </section>
+  </article>
+{% endblock %}

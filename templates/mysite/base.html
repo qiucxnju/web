@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    
+    <title>{{site.title}}</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/style.css' %}" />
+    
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <script src="{% static 'blog/js/blog.js' %}"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    {% block head %}
+    {% endblock %}
+  </head>
+  <body>
+    <div id="main" role="main">
+      <header>
+        <div id="header">
+          <h1><a title='{{site.owner}}' class="" href="{{site.index}}">{{site.owner}}</a></h1>
+        </div>
+        <nav>
+          
+          <span><a title="archive" href="/archive"><i class="fa fa-list-ul"></i></a></span>
+          
+          <span><a title="Tags" href="/tags"><i class="fa fa-tags"></i></a></span>
+          <span>        {% if not session.id %}
+            <a href="/authority/login">Login</a>/<a href="/authority/register">Register</a>
+          {% else %}
+            Welcome {{ session.name }} !<a href="/authority/logout">Logout</a>
+          {% endif %}</span>
+        </nav>
+      </header>
+      <div id="content">
+        {% block content %}
+        {% endblock %}
+      </div>
+      <footer>
+      </footer>
+      </div> <!-- main -->
+    </body>
+  </html>

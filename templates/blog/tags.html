@@ -1,0 +1,27 @@
+{% extends "mysite/base.html" %}
+{% load staticfiles %}
+{% load blog_filter %}
+{% block content %}
+  
+  <section class="title">
+    <h2>tags </h2>
+  </section>
+  
+  <section class="post">
+    <div id="tag_cloud">
+      {% for tag in tags %}
+        <a  href="#{{tag.value}}" title="{{tag.value}}" rel="{{tag.size}}">{{tag.value}}({{tag.size}})</a>
+      {% endfor %}
+    </div>
+    <ul class="listing">
+      {% for tag in tags %}
+        <li class="listing-seperator" id="{{tag.value}}">{{tag.value}}</li>
+        {% for blog in tag.blogs %}
+          <li class="listing-item">
+            <time datetime="{{ blog.date|date:"c" }}">{{ blog.date|date:"c" }}</time>
+            <a href="/blog/{{ blog.path }}" title="{{ blog.title }}">{{ blog.title }}</a>
+          </li>
+        {% endfor %}
+      {% endfor %}
+    </ul>
+  {% endblock %}

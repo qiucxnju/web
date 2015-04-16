@@ -1,0 +1,35 @@
+{% extends "mysite/base.html" %}
+{% load staticfiles %}
+{% load blog_filter %}
+{% block content %}
+  <section class="title">
+    <h2>{{blog.title}}</h2>
+  </section>
+  <section class="meta">
+    <span class="time">
+      <time datetime='{{ blog.date|date:"c" }}'>{{ blog.date|date:"c" }}</time>
+    </span>
+    
+    <span class="tags">
+      {% for tag in blog.tags.all %}
+        <a href="/tags/{{tag.value}}" title="{{tag.value}}">#{{tag.value}}</a>
+      {% endfor %}
+    </span>
+    
+    
+    
+    <!-- END this would not work on any other domain -->
+    
+  </section>
+  <section class="post">
+    {% autoescape off %}
+    {{blog.content | markdown}}
+  {% endautoescape %}
+</section>
+{% if blog.owner == user %}
+  <a href='?edit='>EDIT</a>
+  <a href='../file/upload' target="view_window">UPLOAD</a>
+  <!-- /  <a href='?delete='>DELETE</a> -->
+  <br>
+{% endif %}
+{% endblock %}

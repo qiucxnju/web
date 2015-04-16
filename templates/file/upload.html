@@ -1,0 +1,17 @@
+{% extends "mysite/base.html" %}
+{% load staticfiles %}
+{% load blog_filter %}
+{% block content %}
+	<form method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="form-group" >
+			<label for="file_title">Title:</label>
+			<input id="file_title" name="title" type="text" class="form-control" placeholder="title" aria-describedby="basic-addon1" >
+		</div>
+		<div class="form-group">
+			<label for="file_file">File:</label>
+			<input id="file_file" name="file" type="file"/>
+		</div>
+		<button  class="btn btn-default">Submit</button>
+	</form>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "mysite/base.html" %}
+{% block content %}
+  <article>
+    <section class="title">
+      <h2>archive </h2>
+    </section>
+    
+    <section class="post">
+      <ul class="listing">
+        
+        {% for blog in blogs %}
+          {% ifchanged blog.date.year %}
+            <li class="listing-seperator">{{blog.date.year}}</li>
+          {% endifchanged %}
+          <li class="listing-item">
+            <time datetime='{{ blog.date|date:"c" }}'>{{ blog.date|date:"c" }}</time>
+            <a href="/blog/{{blog.path}}" title="{{blog.title}}">{{blog.title}}</a>
+          </li>
+        {% endfor %}
+        
+      </ul>
+    </section>
+  </article>
+{% endblock %}
