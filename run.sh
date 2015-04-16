@@ -1,0 +1,1 @@
+uwsgi --http:8000 --chdir ./mysite --module wsgi
