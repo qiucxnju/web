@@ -1,3 +1,4 @@
+sudo pip install uwsgi
 sudo pip install pyyaml
 python manage.py makemigrations authority
 python manage.py sqlmigrate authority 0001
