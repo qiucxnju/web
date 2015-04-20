@@ -1,1 +1,1 @@
-uwsgi --http :8000 --chdir . --module mysite.wsgi
+uwsgi -x djangochina_socket.xml 
