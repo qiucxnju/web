@@ -2,3 +2,5 @@ db.sqlite3
 static/file/*
 *.pyc
 *.log
+mysite/site.yaml
+

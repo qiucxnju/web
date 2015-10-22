@@ -26,7 +26,7 @@
     {{blog.content | markdown}}
   {% endautoescape %}
 </section>
-{% if blog.owner == user %}
+{% if site.public and user  or blog.owner == user %}
   <a href='?edit='>EDIT</a>
   <a href='../file/upload' target="view_window">UPLOAD</a>
   <!-- /  <a href='?delete='>DELETE</a> -->

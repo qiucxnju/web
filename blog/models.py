@@ -26,15 +26,18 @@ class Blog(models.Model):
 		return blog
 		
 	@staticmethod
-	def try_save(data, path, user, blog):
+	def try_save(data, path, user, blog, isPublic):
 		if user is None:
 			return (None, "please login first")
-		if user.access_level > 1:
-			return (None, "you have no authority to write blog")
+		if not isPublic:
+			if user.access_level > 1:
+				return (None, "you have no authority to write blog")
 
-		if blog is not None:
-			if blog.owner != user:
-				return (None, "you have no authority to modify this blog")
+			if blog is not None:
+				if blog.owner != user:
+					return (None, "you have no authority to modify this blog")
+		if blog is not None: 
+			user = blog.owner
 		if (data['show'] == 'true'):
 			level = 1000
 		else:

@@ -31,21 +31,22 @@ def blog(request):
 	blog = Blog.get_blog_path(path)
 	user = User.get_user_session(request.session)
 	if request.method == 'POST':
-		Blog.try_save(request.POST, path, user, blog)
+		Blog.try_save(request.POST, path, user, blog, settings.SITE.get("public"))
 		return HttpResponse('success')
 	
 	if blog is None:
 		if user is None:
 			return HttpResponse('blog not exist')
-		if user.access_level > 1:
+		if (not settings.SITE.get("public")) and (user.access_level > 1):
 			return HttpResponse('blog not exist')
 		if 'edit' in request.GET:
 			return edit_blog(request, blog)
 		return HttpResponseRedirect(path + '?edit=');
 	else :
 		if 'edit' in request.GET:
-			if user != blog.owner: 
-				return HttpResponse("you can't edit this blog")
+			if (not settings.SITE.get("public"))or(user is None):
+				if user != blog.owner: 
+					return HttpResponse("you can't edit this blog")
 			return edit_blog(request, blog)
 		return read_blog(request, blog, user)
 
