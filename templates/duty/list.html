@@ -1,0 +1,107 @@
+{% extends "mysite/base.html" %}
+{% load staticfiles %}
+{% block head %}
+  <script src="{% static 'duty/js/rule.js' %}"></script>
+{% endblock %}
+{% block content %}
+  <article>
+    <section class="title">
+      <h2>Rule</h2>
+    </section>
+
+  <div class="form-group">
+    <label for="title" >Add Rule:</label>
+    <button type="button" onclick="showRuleDialog()" >
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </button>
+    <button id="RuleDialogTrigger" type="button" data-toggle="modal" class="hidden btn btn-link" data-target="#RuleDialog">
+    </button>
+    
+    <section class="post">
+      <ul class="listing">
+        
+        {% for rule in rules %}
+          {% if rule.type == 2 %}
+          <li class="listing-item">
+            <label  >新增值班人员:({{rule.name}})</label>
+            <label  >开始时间:({{ rule.start|date:"Y-m-d" }})</label>
+            <label  >性别:(
+            {% if rule.times == 2 %}
+            女
+            {% else %}
+            男
+            {% endif %}
+            )</label>
+          </li>
+          {% endif %}
+        {% endfor %}
+        
+      </ul>
+      <ul class="listing">
+        {% for duty in dutys %}
+          <li class="listing-item">
+          <button type="button" class="btn btn-default" onClick="jumpDay($(this))"><time datetime='{{ duty.date|date:"Y-m-d" }}'>{{ duty.date|date:"Y-m-d" }}:{{duty.name}}</time></button>
+            
+          </li>
+        {% endfor %}
+        
+      </ul>
+    </section>
+        
+    <div class="modal fade" id="RuleDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  {% csrf_token %}
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button id="RuleDialogClose" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" >Rules:</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="type">规则类型</label>
+              <select id="type" name="type" class="form-control">
+                <option value="1">替代值班</option>
+                <option value="2">新增值班人员</option>
+                <option value="3">删除值班人员</option>
+                <option value="4">跳过某周</option>
+                <option value="5">跳过某日</option>
+              </select>
+            </div>　　　　
+            <div class="form-group" id='nameForm'>
+              <label for="name">姓名:</label>
+              <input id="name" name="name" type="text" class="form-control" placeholder="姓名" aria-describedby="basic-addon1">
+            </div>　　
+            <div class="form-group"  id='timesForm'>
+              <label for="times">性别</label>
+              <select id="times" name="times" class="form-control">
+                <option value="1">男</option>
+                <option value="2">女</option>
+              </select>
+            </div>　　　
+            <div class="form-group"   id='startForm'>
+              <label for="start">开始时间</label>
+              <input type="date" id="start" ></input>
+            </div>
+
+            <div class="form-group"   >
+              <button onclick="submit()" class="btn btn-default">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>   
+    </div>    
+
+    <section class="post">
+      <ul class="listing">
+        {% for rule in rules %}
+          <li class="listing-item">
+            <time datetime='{{ rule.date|date:"Y-m-d D" }}'>{{ rule.date|date:"Y-m-d D" }}</time>
+          </li>
+        {% endfor %}
+        
+      </ul>
+    </section>
+  </article>
+{% endblock %}
+
+

@@ -1,5 +1,7 @@
 sudo pip install uwsgi
 sudo pip install pyyaml
+sudo pip install pattern
+sudo pip install markdown
 python manage.py makemigrations authority
 python manage.py sqlmigrate authority 0001
 python manage.py makemigrations blog

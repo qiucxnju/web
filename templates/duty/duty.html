@@ -1,0 +1,26 @@
+{% extends "mysite/base.html" %}
+{% load staticfiles %}
+{% load duty_filter %}
+{% block head %}
+  <script src="{% static 'duty/js/rule.js' %}"></script>
+{% endblock %}
+{% block content %}
+  <article>
+    <section class="title">
+      <h2>值班</h2>
+    </section>
+
+    <section class="post">
+      <ul class="listing">
+        {% for duty in dutys %}
+          <li class="listing-item">
+            <time datetime='{{ duty.date|date:"Y-m-d" }}'>{{ duty.date|date:"Y-m-d" }}({{ duty.date|mydate }}):{{duty.name}}</time>
+          </li>
+        {% endfor %}
+        
+      </ul>
+    </section>
+  </article>
+{% endblock %}
+
+

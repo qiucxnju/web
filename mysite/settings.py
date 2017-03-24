@@ -15,6 +15,7 @@ import os
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+print BASE_DIR
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,6 +31,8 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
+    '180.3.10.37',
+    '172.23.82.104',
 	]
 
 
@@ -45,6 +48,8 @@ INSTALLED_APPS = (
     'blog',
     'file',
     'authority',
+    'talos',
+    'duty' ,
 )
 
 MIDDLEWARE_CLASSES = (
@@ -93,10 +98,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+#TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': ['templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    }]
 
-
-TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 

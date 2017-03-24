@@ -1,8 +1,8 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import *
 
 from file import views
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^upload', views.upload, name='index'),
     url(r'^list', views.list, name='index'),
-)
+]
